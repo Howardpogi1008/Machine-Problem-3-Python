@@ -1,0 +1,56 @@
+#MP PRoblem 3 Python!!!
+
+import numpy as np
+import ast as conv
+import sys
+
+#user input
+varinp = input('Please enter the datapoints in array form e.g. [[6,9],[6,9]]: ') 
+
+#str to list
+listinp = conv.literal_eval(varinp) 
+
+#lst to array
+data = np.asarray(listinp) 
+
+#Length inputed.
+datapoints = len(data) 
+
+#Locating the x and y axes.
+x = data[0:datapoints,0]
+y = data[0:datapoints,1]
+
+#Loop 1 to the Datapoints.
+for n in range(1,datapoints):
+    leastnorm=[];
+    coefficient = [];
+    eq = [];
+    error=[];
+   
+    if n <=10:
+        
+        #To return the array with less squared errors.
+        data1 = np.polyfit(x,y,n)
+        coefficient.append(data1)
+            
+        #Evaluates the given values.
+        bestfit = np.polyval(data1,x) 
+        eq.append(bestfit)
+        
+        Eqform = np.poly1d(bestfit)
+            
+        #Finds the norm.
+        norm = np.linalg.norm(y-bestfit)
+        error.append(norm)
+        #Finds the least-norm error.
+        e = np.min(norm)
+        leastnorm.append(e)
+        
+    elif n >10:
+        
+        sys.exit('We only accept 1st degree up to 10th degree. Please try again')
+        
+    #PRints the results.
+    print('The Coefficient of the polynomial: \n',bestfit,'\n')
+    print('Equation form: \n',Eqform,'\n')
+    print('The least-norm error vector e(x): \n',leastnorm,'\n')
